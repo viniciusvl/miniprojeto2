@@ -59,7 +59,7 @@ def extract_features(audio_path):
 # --------------------------------- PARTE 2: STREAMLIT --------------------------------- #
 
 # Configuração do app Streamlit (Título e descrição)
-st.title("🔊 Detector de emoções em áudios")
+st.title("🔊 **Detector de emoções em áudios**")
 
 # Upload de arquivo de áudio (wav, mp3, ogg)
 uploaded_file = st.file_uploader(
@@ -97,7 +97,8 @@ if uploaded_file is not None: # se o usuário enviar algo
     # prediction[0] retorna a primeira linha de prediction, que é um vetor de probabilidades
     # como prediction e emotion tem indices respectivos, jogamos o indice do maior de prediction em emotion
 
-    emotion = EMOTIONS[np.argmax(prediction[0])]
+    more_probability = np.argmax(prediction[0]) # salva o indice da emoção mais provavel
+    emotion = EMOTIONS[more_probability] # retorna a emoção mais provavel
 
     # Exibir o resultado
     if (emotion == 'angry'):
@@ -131,7 +132,7 @@ if uploaded_file is not None: # se o usuário enviar algo
 
     st.bar_chart(data_bar, x='Emotion', y='Predction', y_label='Probability', height=600, width=600)
 
-    st.write('**Probabilidades:** ')
+    st.write('### **PROBABILIDADES DE CADA EMOÇÃO** ')
     for emotion, prob in zip(EMOTIONS, prediction[0]):
         st.write(f"{emotion}: {prob*100:.2f}%")
 
